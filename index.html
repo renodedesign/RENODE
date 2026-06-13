@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,viewport-fit=cover,initial-scale=1.0">
+<title>RE:NODE 리노드 디자인 스튜디오</title>
+<meta name="description" content="생활의 흐름에 맞춘 인테리어 디자인 스튜디오. 공간의 디테일부터 제작 가구까지 조율합니다.">
+<meta property="og:title" content="RE:NODE 리노드 디자인 스튜디오">
+<meta property="og:description" content="생활의 흐름에 맞춘 인테리어 디자인 스튜디오. 공간의 디테일부터 제작 가구까지 조율합니다.">
+<meta property="og:image" content="https://cdn.imweb.me/upload/S202605043e34e550cd94e/58b1543ad3987.png">
+<meta property="og:url" content="https://renode.kr/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="https://cdn.imweb.me/thumbnail/20260514/00a1031ad24a4.png">
+<link rel="apple-touch-icon" href="https://cdn.imweb.me/thumbnail/20260514/f52c69916ac52.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Pretendard','Noto Sans KR','Apple SD Gothic Neo',sans-serif;
+  background:#fff;color:#212121;overflow-x:hidden;
+}
+
+/* ───── PC HEADER ───── */
+#doz_header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(255,255,255,0.97);
+  height:80px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+  transition:box-shadow .3s;
+}
+#doz_header.scrolled{box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.hd-logo a{
+  font-family:'Poppins',sans-serif;font-size:18px;font-weight:400;
+  letter-spacing:2px;color:#212121;text-decoration:none;
+}
+.hd-nav{display:flex;list-style:none;gap:0}
+.hd-nav li a{
+  font-family:'Poppins',sans-serif;font-size:13px;color:#555555;
+  text-decoration:none;padding:0 20px;
+  display:flex;align-items:center;height:80px;
+  transition:color .2s;
+}
+.hd-nav li a:hover,.hd-nav li a.active{color:#212121}
+.hd-menu-btn{
+  cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:10px;
+}
+.hd-menu-btn span{display:block;width:22px;height:1px;background:#212121}
+
+/* ───── MOBILE HEADER ───── */
+#mobile_header{
+  display:none;
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(255,255,255,0.97);
+  height:56px;
+  align-items:center;justify-content:center;
+  padding:0 15px;
+}
+#mobile_header .m-logo a{
+  font-family:'Pretendard','Noto Sans KR',sans-serif;
+  font-size:13px;letter-spacing:1px;
+  color:#212121;text-decoration:none;
+}
+#mobile_header .m-menu-btn{
+  position:absolute;right:15px;cursor:pointer;
+  display:flex;flex-direction:column;gap:4px;padding:8px;
+}
+#mobile_header .m-menu-btn span{display:block;width:18px;height:1px;background:#212121}
+
+/* ───── SLIDE MENU (우측) ───── */
+.slide-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.3);
+  z-index:1998;opacity:0;visibility:hidden;transition:opacity .3s;
+}
+.slide-overlay.open{opacity:1;visibility:visible}
+#slide_menu{
+  position:fixed;top:0;right:-320px;bottom:0;width:300px;
+  background:rgba(232,228,223,0.9);
+  z-index:1999;padding:60px 0 0;
+  transition:right .3s ease;
+  backdrop-filter:blur(8px);
+}
+#slide_menu.open{right:0}
+.slide-close{
+  position:absolute;top:16px;right:16px;
+  font-size:20px;cursor:pointer;
+  color:rgba(76,74,74,0.9);background:none;border:none;padding:8px;
+}
+.slide-menu-list{list-style:none;padding:10px 0}
+.slide-menu-list li{border-top:0px solid #f3f3f3}
+.slide-menu-list li a{
+  display:block;padding:9px 20px 10px;
+  font-family:'Poppins',sans-serif;font-size:13px;letter-spacing:2px;
+  color:rgba(76,74,74,0.9);text-decoration:none;transition:color .2s;
+}
+.slide-menu-list li a:hover{color:#212121}
+.slide-menu-list li a.active-real{color:#fff}
+
+/* ───── PC HERO (슬라이더) ───── */
+#hero{
+  position:relative;overflow:hidden;
+  height:800px;margin-top:80px;
+}
+.hero-slides{position:relative;height:100%}
+.hero-slide{
+  position:absolute;inset:0;opacity:0;
+  transition:opacity 800ms ease;
+}
+.hero-slide.active{opacity:1;z-index:1}
+.hero-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:50% 50%;background-repeat:no-repeat;
+}
+.hero-bg-1{background-image:url('https://cdn.imweb.me/thumbnail/20260504/8cb7f59bf317b.png');background-color:#e8e4df}
+.hero-bg-2{background-image:url('https://cdn.imweb.me/thumbnail/20260504/49e93e2e49038.png');background-color:#d9d5d0}
+.hero-bg-3{background-image:url('https://cdn.imweb.me/thumbnail/20260504/9ee68adc4385e.png');background-color:#ddd9d4}
+.hero-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.25);z-index:2}
+/* 텍스트: 좌측 상단 8% + 수직 중앙 */
+.hero-content{
+  position:absolute;z-index:3;inset:0;
+  display:flex;align-items:center;
+}
+.hero-text{
+  padding-left:8%;max-width:900px;
+}
+.hero-eyebrow{
+  font-family:'Poppins',sans-serif;font-size:14px;letter-spacing:4px;
+  color:#fff;font-weight:500;margin:0 0 24px 0;
+}
+.hero-h1{
+  font-family:'Poppins',sans-serif;font-size:52px;font-weight:300;
+  line-height:1.2;color:#fff;margin:0 0 18px 0;
+}
+/* 슬라이드 2,3은 font-size 48px */
+.hero-slide:nth-child(2) .hero-h1,
+.hero-slide:nth-child(3) .hero-h1{font-size:48px;line-height:1.22}
+.hero-sub{
+  font-size:18px;font-weight:300;line-height:1.7;letter-spacing:-0.3px;
+  color:#f4f1eb;text-shadow:0 1px 8px rgba(0,0,0,0.25);
+  font-family:'Pretendard','Noto Sans KR',sans-serif;
+  margin:0;
+}
+.hero-slide:nth-child(2) .hero-sub,
+.hero-slide:nth-child(3) .hero-sub{font-size:17px}
+.hero-dots{
+  position:absolute;bottom:48px;left:50%;transform:translateX(-50%);
+  z-index:4;display:flex;gap:10px;
+}
+.hero-dot{
+  width:8px;height:8px;border-radius:50%;cursor:pointer;
+  border:1px solid rgba(255,255,255,1);background:transparent;
+  transition:background .3s;
+}
+.hero-dot.active{background:rgba(255,255,255,1)}
+
+/* ───── MOBILE GALLERY ───── */
+#mobile_gallery{display:none}
+
+/* ───── ABOUT PC ───── */
+#about_pc{
+  background:#fff;text-align:center;
+  padding:215px 15px;
+}
+/* ABOUT MOBILE */
+#about_mobile{display:none}
+
+.section-eyebrow{
+  font-family:'Poppins',sans-serif;font-size:12px;letter-spacing:4px;
+  color:#999999;margin:0;
+}
+.about-title-pc{
+  text-align:center;font-size:25px;font-weight:300;color:#212121;
+  margin:22px 0 0 0;line-height:1.55;letter-spacing:-1px;
+  font-family:'Pretendard','Noto Sans KR',sans-serif;
+}
+.about-body-pc{
+  text-align:center;font-size:15px;color:#666666;
+  margin:28px auto 0;line-height:2.0;max-width:920px;
+  letter-spacing:-0.4px;font-weight:400;
+  font-family:'Pretendard','Noto Sans KR',sans-serif;
+}
+.about-body-pc .em{color:#222}
+
+/* ───── PROJECTS ───── */
+#projects{
+  background:rgba(245,243,240,1);padding:100px 15px;text-align:center;
+}
+.proj-eyebrow{font-family:'Poppins',sans-serif}
+.proj-title{
+  text-align:center;font-size:26px;font-weight:300;color:#212121;
+  margin:18px 0 0;letter-spacing:-0.4px;
+  font-family:'Pretendard','Noto Sans KR',sans-serif;
+}
+.proj-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+  max-width:1280px;margin:20px auto 0;padding:0 15px;text-align:left;
+}
+.proj-card{display:block;text-decoration:none;color:inherit}
+.proj-img{
+  width:100%;display:block;
+  background-size:cover;background-position:center;
+  aspect-ratio:1312/816;
+}
+.proj-img.p1{background-image:url('https://cdn.imweb.me/thumbnail/20260511/755881d847541.jpg')}
+.proj-img.p2{background-image:url('https://cdn.imweb.me/thumbnail/20260511/8cb1be3e6a229.jpg')}
+.proj-label{margin-top:12px;padding:0 2px}
+.proj-label .cat{
+  font-family:'Poppins',sans-serif;font-size:11px;letter-spacing:1px;
+  color:#999;margin:0 0 8px;
+}
+.proj-label .name{
+  font-size:16px;font-weight:400;color:#212121;
+  letter-spacing:-0.2px;margin:0;line-height:1.5;
+}
+.btn-outline{
+  display:inline-block;border:1px solid #212121;color:#212121;
+  background:transparent;padding:10px 35px;
+  font-family:'Poppins',sans-serif;font-size:13px;letter-spacing:2px;
+  text-decoration:none;cursor:pointer;margin-top:30px;
+  transition:background .2s,color .2s;border-radius:0;
+}
+.btn-outline:hover{background:#212121;color:#fff}
+
+/* ───── PROCESS ───── */
+#process{background:#fff;padding:100px 15px;text-align:center}
+.proc-eyebrow{font-family:'Poppins',sans-serif}
+.proc-h2{
+  text-align:center;font-size:28px;font-weight:300;color:#212121;
+  margin:20px 0 0;font-family:'Poppins',sans-serif;
+}
+.proc-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  max-width:1280px;margin:50px auto 0;padding:0 15px;text-align:left;
+}
+.proc-item{
+  padding:0 15px;height:160px;
+  display:flex;flex-direction:column;justify-content:flex-start;
+}
+.proc-num{font-family:'Poppins',sans-serif;font-size:32px;font-weight:200;color:#c8c2ba;line-height:1;margin:0}
+.proc-name{font-size:16px;font-weight:400;color:#212121;margin:24px 0 0;line-height:1.4}
+.proc-desc{font-size:13px;color:#888888;margin:12px 0 0;line-height:1.8}
+.proc-btn-wrap{text-align:center;margin-top:50px}
+.btn-outline-proc{
+  display:inline-block;border:1px solid #212121;color:#212121;
+  background:transparent;padding:10px 28px;
+  font-family:'Poppins',sans-serif;font-size:13px;letter-spacing:4px;
+  text-decoration:none;cursor:pointer;border-radius:0;
+  transition:background .2s,color .2s;
+}
+.btn-outline-proc:hover{background:#212121;color:#fff}
+
+/* ───── FOOTER ───── */
+footer{
+  background:#fff;text-align:center;
+  padding:20px 15px 40px;
+  font-size:12px;color:#3b3b3b;
+}
+.ft-sns{display:flex;justify-content:center;gap:4px;margin-bottom:0}
+.ft-sns a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;
+  color:#3b3b3b;text-decoration:none;
+  transition:opacity .2s;
+}
+.ft-sns a:hover{opacity:.7}
+.ft-logo{font-size:14px;letter-spacing:2px;color:#222;font-weight:700;margin:0 0 14px}
+.ft-tagline{font-size:12px;color:#777;line-height:1.8;margin:0 0 14px}
+.ft-info p{font-size:11px;color:#888;line-height:1.3;margin:0 0 6px}
+
+/* ───── FADE UP ───── */
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* ───── RESPONSIVE ───── */
+@media(max-width:767px){
+  /* 헤더 교체 */
+  #doz_header{display:none}
+  #mobile_header{display:flex}
+
+  /* PC 히어로 숨김 */
+  #hero{display:none}
+
+  /* 모바일 갤러리 */
+  #mobile_gallery{
+    display:block;margin-top:56px;
+  }
+  .mg-wrap{position:relative;overflow:hidden}
+  .mg-inner{
+    display:flex;
+    transition:transform .7s ease;
+  }
+  .mg-item{
+    min-width:100%;
+    height:56vw;
+    background-size:cover;background-position:center;
+  }
+  .mg-dots{
+    position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+    display:flex;gap:8px;z-index:5;
+  }
+  .mgdot{
+    width:7px;height:7px;border-radius:50%;cursor:pointer;
+    border:1px solid rgba(255,255,255,1);background:transparent;
+    transition:background .3s;display:block;
+  }
+  .mgdot.active{background:rgba(255,255,255,1)}
+
+  /* PC ABOUT 숨김 → 모바일 ABOUT 표시 */
+  #about_pc{display:none}
+  #about_mobile{
+    display:block;background:#fff;
+    padding:30px 24px 50px;text-align:center;
+  }
+  #about_mobile .section-eyebrow{display:block;margin-bottom:0}
+  #about_mobile .about-title-m{
+    text-align:center;font-size:24px;font-weight:300;color:#212121;
+    margin:18px 0 0;line-height:1.42;letter-spacing:-0.8px;
+    font-family:'Pretendard','Noto Sans KR',sans-serif;
+  }
+  #about_mobile .about-body-m{
+    text-align:center;font-size:14px;color:#666;
+    margin:26px auto 0;line-height:1.95;
+    max-width:100%;letter-spacing:-0.4px;font-weight:400;
+    font-family:'Pretendard','Noto Sans KR',sans-serif;
+  }
+
+  /* PC 전용 섹션 숨김 */
+  #projects{display:none}
+  #process{display:none}
+
+  #slide_menu{width:100%}
+}
+
+@media(min-width:768px){
+  #mobile_gallery{display:none}
+  #about_mobile{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- PC HEADER -->
+<header id="doz_header">
+  <div class="hd-logo"><a href="/">RE:NODE DESIGN STUDIO</a></div>
+  <nav>
+    <ul class="hd-nav">
+      <li><a href="/" class="active">HOME</a></li>
+      <li><a href="/project">PROJECT</a></li>
+      <li><a href="/process">PROCESS</a></li>
+      <li><a href="/contact">CONTACT</a></li>
+      <li><a href="https://blog.naver.com/node-studio" target="_blank">BLOG</a></li>
+    </ul>
+  </nav>
+  <div class="hd-menu-btn" onclick="openSlide()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- MOBILE HEADER -->
+<header id="mobile_header">
+  <div class="m-logo"><a href="/">RE:NODE DESIGN STUDIO</a></div>
+  <div class="m-menu-btn" onclick="openSlide()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- SLIDE MENU -->
+<div class="slide-overlay" id="overlay" onclick="closeSlide()"></div>
+<div id="slide_menu">
+  <button class="slide-close" onclick="closeSlide()">✕</button>
+  <ul class="slide-menu-list">
+    <li><a href="/" class="active-real" onclick="closeSlide()">HOME</a></li>
+    <li><a href="/project" onclick="closeSlide()">PROJECT</a></li>
+    <li><a href="/process" onclick="closeSlide()">PROCESS</a></li>
+    <li><a href="/contact" onclick="closeSlide()">CONTACT</a></li>
+    <li><a href="https://blog.naver.com/node-studio" target="_blank" onclick="closeSlide()">BLOG</a></li>
+  </ul>
+</div>
+
+<!-- PC HERO -->
+<section id="hero">
+  <div class="hero-slides">
+
+    <div class="hero-slide active">
+      <div class="hero-bg hero-bg-1"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <p class="hero-eyebrow">RE:NODE DESIGN STUDIO</p>
+          <h1 class="hero-h1">We design<br>the way you live.</h1>
+          <p class="hero-sub">일상이 머무는 공간, 그 흐름을 설계합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-slide">
+      <div class="hero-bg hero-bg-2"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <p class="hero-eyebrow">RESIDENTIAL INTERIOR</p>
+          <h1 class="hero-h1">A home shaped<br>around your life.</h1>
+          <p class="hero-sub">생활의 흐름에 맞춘 주거 공간.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-slide">
+      <div class="hero-bg hero-bg-3"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <p class="hero-eyebrow">BESPOKE DESIGN</p>
+          <h1 class="hero-h1">Every detail,<br>carefully considered.</h1>
+          <p class="hero-sub">마감과 디테일까지 세심하게 조율합니다.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="hero-dots">
+    <div class="hero-dot active" onclick="goSlide(0)"></div>
+    <div class="hero-dot" onclick="goSlide(1)"></div>
+    <div class="hero-dot" onclick="goSlide(2)"></div>
+  </div>
+</section>
+
+<!-- MOBILE GALLERY -->
+<div id="mobile_gallery">
+  <div class="mg-wrap">
+    <div class="mg-inner" id="mgInner">
+      <div class="mg-item" style="background-image:url('https://cdn.imweb.me/thumbnail/20260515/24ccfd4e56f7e.png')"></div>
+      <div class="mg-item" style="background-image:url('https://cdn.imweb.me/thumbnail/20260512/3e5d96501499e.jpg')"></div>
+      <div class="mg-item" style="background-image:url('https://cdn.imweb.me/thumbnail/20260512/aee375ce1960f.jpg')"></div>
+    </div>
+    <div class="mg-dots">
+      <span class="mgdot active" onclick="goMg(0)"></span>
+      <span class="mgdot" onclick="goMg(1)"></span>
+      <span class="mgdot" onclick="goMg(2)"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PC -->
+<section id="about_pc">
+  <p class="section-eyebrow fade-up">ABOUT US</p>
+  <h2 class="about-title-pc fade-up">
+    공간과 사람, 일상과 취향이<br>
+    다시 새롭게 이어지는 연결점 'RE: NODE' 을 설계합니다.
+  </h2>
+  <p class="about-body-pc fade-up">
+    RE: NODE DESIGN STUDIO는 주거와 상업 공간의 설계부터 시공, 스타일링까지<br>
+    사용자의 일상 속 숨겨진 취향을 발견하고 공간과 삶을 잇는 밀도 있는 과정을 지향합니다.<br><br>
+    우리에게 'RE: NODE'는 단순한 연결을 넘어선 조화의 재구성 의미합니다.<br>
+    공간을 단순한 형태가 아닌, 그 안에 머무는 <span class="em">시간과 삶의 흐름을 담아내는 장소</span>라 믿기에<br>
+    사용자의 라이프스타일을 깊이 들여다보는 것에서부터 우리의 설계는 시작됩니다.<br><br>
+    정해진 스타일을 반복하기보다 공간의 조건과 사용자의 흐름을 먼저 살핍니다.<br>
+    동선과 수납, 제작 가구의 짜임새, 마감재와 빛의 조율까지 모든 시공 디테일을<br>
+    하나의 흐름 안에서 세심하게 완성하여 당신만의 고유한 공기를 가진 안식처를 제안합니다.
+  </p>
+</section>
+
+<!-- ABOUT MOBILE -->
+<section id="about_mobile">
+  <p class="section-eyebrow">ABOUT US</p>
+  <h2 class="about-title-m">
+    공간과 사람,<br>일상과 취향이 다시 새롭게 이어지는<br>연결점(RE:NODE)을 설계합니다.
+  </h2>
+  <p class="about-body-m">
+    RE: NODE DESIGN STUDIO 는<br>
+    주거와 상업 공간의 설계부터 시공, 스타일링까지<br>
+    사용자의 일상 속 숨겨진 취향을 발견하고<br>
+    공간과 삶을 잇는 밀도 있는 과정을 지향합니다.<br><br>
+    우리에게 'RE:NODE' 는<br>
+    단순한 연결을 넘어선 조화의 재구성을 의미합니다.<br>
+    공간을 단순한 형태가 아닌, 그 안에 머무는 시간과 삶의<br>
+    흐름을 담아내는 장소라 믿기에 사용자의 라이프스타일을<br>
+    깊이 들여다보는 것에서부터 우리의 설계는 시작됩니다.<br><br>
+    정해진 스타일을 반복하기보다 공간의 조건과<br>
+    사용자의 흐름을 먼저 살핍니다.<br>
+    동선과 수납, 제작 가구의 짜임새, 마감재와 빛의 조율까지<br>
+    모든 시공 디테일을 하나의 흐름 안에서 세심하게 완성하여<br>
+    당신만의 고유한 공기를 가진 안식처를 제안합니다.
+  </p>
+</section>
+
+<!-- PROJECTS (PC only) -->
+<section id="projects">
+  <p class="section-eyebrow proj-eyebrow fade-up">PROJECTS</p>
+  <h2 class="proj-title fade-up">프로젝트</h2>
+  <div class="proj-grid">
+    <a class="proj-card fade-up" href="/project">
+      <div class="proj-img p1"></div>
+      <div class="proj-label">
+        <p class="cat">RESIDENCE &mdash; 2025</p>
+        <p class="name">수원 매교역푸르지오</p>
+      </div>
+    </a>
+    <a class="proj-card fade-up" href="/project">
+      <div class="proj-img p2"></div>
+      <div class="proj-label">
+        <p class="cat">RESIDENCE &mdash; 2025</p>
+        <p class="name">수지 동부센트레빌</p>
+      </div>
+    </a>
+  </div>
+  <a class="btn-outline fade-up" href="/project">VIEW ALL PROJECTS</a>
+</section>
+
+<!-- PROCESS (PC only) -->
+<section id="process">
+  <p class="section-eyebrow proc-eyebrow fade-up">PROCESS</p>
+  <h2 class="proc-h2 fade-up">프로젝트 진행 과정</h2>
+  <div class="proc-grid">
+    <div class="proc-item fade-up">
+      <p class="proc-num">01</p>
+      <p class="proc-name">상담 및 계약</p>
+      <p class="proc-desc">공간의 조건과 라이프스타일을 바탕으로 프로젝트의 방향을 함께 정리합니다.</p>
+    </div>
+    <div class="proc-item fade-up">
+      <p class="proc-num">02</p>
+      <p class="proc-name">실측 및 디자인 제안</p>
+      <p class="proc-desc">동선, 구조 수납, 마감재 등 공간에 맞는 설계를 구체화합니다.</p>
+    </div>
+    <div class="proc-item fade-up">
+      <p class="proc-num">03</p>
+      <p class="proc-name">착공 및 제작</p>
+      <p class="proc-desc">확정된 디자인을 기반으로, 자재 발주 및 제작 과정을 거쳐 공사를 시작합니다.</p>
+    </div>
+    <div class="proc-item fade-up">
+      <p class="proc-num">04</p>
+      <p class="proc-name">준공 및 사후관리</p>
+      <p class="proc-desc">공사 완료 후 스타일링과 입주를 지원하며, 이후 발생하는 문제에 대해 지속적으로 관리합니다.</p>
+    </div>
+  </div>
+  <div class="proc-btn-wrap fade-up">
+    <a class="btn-outline-proc" href="/process">PROJECT&nbsp;&nbsp;&nbsp;PROCESS</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-sns">
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/renode_designstudio" target="_blank" title="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2"/>
+      </svg>
+    </a>
+    <!-- KakaoTalk -->
+    <a href="https://open.kakao.com/o/skj4mssi" target="_blank" title="KakaoTalk">
+      <svg width="24" height="24" viewBox="0 0 36 36">
+        <path fill="currentColor" d="M18 4C10.268 4 4 9.373 4 15.993c0 4.144 2.537 7.782 6.39 9.933l-1.627 5.993 7-4.635A16.8 16.8 0 0 0 18 27.986c7.732 0 14-5.373 14-11.993S25.732 4 18 4z"/>
+        <text x="9.5" y="21.5" font-family="Arial Black,sans-serif" font-size="9.5" font-weight="900" fill="white" letter-spacing="0">Talk</text>
+      </svg>
+    </a>
+    <!-- Naver Blog -->
+    <a href="https://blog.naver.com/node-studio" target="_blank" title="Blog">
+      <svg width="24" height="24" viewBox="0 0 36 36">
+        <rect x="2" y="5" width="32" height="26" rx="3" fill="currentColor"/>
+        <text x="5.5" y="23" font-family="Arial,sans-serif" font-size="9.5" font-weight="700" fill="white" letter-spacing="-0.3">blog</text>
+      </svg>
+    </a>
+    <!-- Phone -->
+    <a href="tel:+820317067561" title="Phone">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+      </svg>
+    </a>
+  </div>
+  <p style="margin:0 0 14px;font-size:14px;letter-spacing:2px;color:#222;font-weight:700;padding-top:5px"><strong>RE:NODE DESIGN STUDIO</strong></p>
+  <p style="margin:0 0 14px;font-size:12px;color:#777;line-height:1.8">삶의 흐름까지 설계하는 리노드 디자인스튜디오</p>
+  <p style="margin:0 0 6px;font-size:11px;color:#888;line-height:1.3">Director &nbsp;&nbsp; 이현정</p>
+  <p style="margin:0 0 6px;font-size:11px;color:#888;line-height:1.3">경기 성남시 고등로 3, C동 121</p>
+  <p style="margin:0 0 6px;font-size:11px;color:#888;line-height:1.3">사업자등록번호 341-05-01190</p>
+  <p style="margin:0 0 6px;font-size:11px;color:#888;line-height:1.3">E-mail &nbsp;&nbsp; renode.design@gmail.com</p>
+</footer>
+
+<script>
+/* ── PC HERO SLIDER ── */
+let cur = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.hero-dot');
+let timer;
+function goSlide(n) {
+  slides[cur].classList.remove('active'); dots[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active'); dots[cur].classList.add('active');
+  clearInterval(timer); timer = setInterval(() => goSlide(cur + 1), 5000);
+}
+timer = setInterval(() => goSlide(cur + 1), 5000);
+
+/* ── MOBILE GALLERY ── */
+let mIdx = 0;
+const mgInner = document.getElementById('mgInner');
+const mgDots = document.querySelectorAll('.mgdot');
+let mgTimer;
+function goMg(n) {
+  mIdx = (n + 3) % 3;
+  if (mgInner) mgInner.style.transform = `translateX(-${mIdx * 100}%)`;
+  mgDots.forEach((d, i) => d.classList.toggle('active', i === mIdx));
+}
+function resetMg() { clearInterval(mgTimer); mgTimer = setInterval(() => goMg(mIdx + 1), 4000); }
+if (mgInner) resetMg();
+
+/* ── SLIDE MENU ── */
+function openSlide() {
+  document.getElementById('slide_menu').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSlide() {
+  document.getElementById('slide_menu').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── HEADER SCROLL ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('doz_header').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+/* ── FADE UP ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
