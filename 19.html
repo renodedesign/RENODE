@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,viewport-fit=cover,initial-scale=1.0">
+<title>프로젝트 상담 의뢰 | RE:NODE DESIGN STUDIO</title>
+<link rel="icon" type="image/png" href="https://cdn.imweb.me/thumbnail/20260514/00a1031ad24a4.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard','Noto Sans KR',sans-serif;background:#fff;color:#212121;overflow-x:hidden}
+#doz_header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.97);height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;transition:box-shadow .3s}
+#doz_header.scrolled{box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.hd-logo a{font-family:'Poppins',sans-serif;font-size:18px;font-weight:400;letter-spacing:2px;color:#212121;text-decoration:none}
+.hd-nav{display:flex;list-style:none}
+.hd-nav li a{font-family:'Poppins',sans-serif;font-size:13px;color:#555;text-decoration:none;padding:0 20px;display:flex;align-items:center;height:80px;transition:color .2s}
+.hd-nav li a:hover,.hd-nav li a.active{color:#212121}
+.hd-menu-btn{cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:10px}
+.hd-menu-btn span{display:block;width:22px;height:1px;background:#212121}
+#mobile_header{display:none;position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.97);height:56px;align-items:center;justify-content:center}
+#mobile_header .m-logo a{font-family:'Pretendard',sans-serif;font-size:13px;letter-spacing:1px;color:#212121;text-decoration:none}
+#mobile_header .m-menu-btn{position:absolute;right:15px;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:8px}
+#mobile_header .m-menu-btn span{display:block;width:18px;height:1px;background:#212121}
+.slide-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:1998;opacity:0;visibility:hidden;transition:opacity .3s}
+.slide-overlay.open{opacity:1;visibility:visible}
+#slide_menu{position:fixed;top:0;right:-320px;bottom:0;width:300px;background:rgba(232,228,223,0.9);z-index:1999;padding:60px 0 0;transition:right .3s ease}
+#slide_menu.open{right:0}
+.slide-close{position:absolute;top:16px;right:16px;font-size:20px;cursor:pointer;color:rgba(76,74,74,0.9);background:none;border:none;padding:8px}
+.slide-menu-list{list-style:none;padding:10px 0}
+.slide-menu-list li a{display:block;padding:9px 20px 10px;font-family:'Poppins',sans-serif;font-size:13px;letter-spacing:2px;color:rgba(76,74,74,0.9);text-decoration:none}
+
+/* 폼 본문 */
+.page-body{padding-top:80px}
+.form-container{max-width:620px;margin:0 auto;padding:60px 20px 80px}
+.form-header{text-align:center;margin-bottom:48px}
+.form-header .eyebrow{font-family:'Poppins',sans-serif;font-size:12px;letter-spacing:4px;color:#999;margin:0 0 20px}
+.form-header h1{font-size:26px;font-weight:300;color:#212121;margin:0 0 20px;letter-spacing:-0.3px}
+.form-header .desc{font-size:14px;color:#888;line-height:2;word-break:keep-all}
+
+/* 폼 스타일 */
+.form-group{margin-bottom:24px}
+.form-group label{display:block;font-size:13px;color:#555;margin-bottom:8px;letter-spacing:-0.2px}
+.form-group label .req{color:#c00;margin-left:2px}
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="email"],
+.form-group textarea,
+.form-group select{
+  width:100%;padding:12px 14px;
+  border:1px solid #e0e0e0;border-radius:0;
+  font-size:14px;color:#212121;
+  font-family:'Pretendard','Noto Sans KR',sans-serif;
+  outline:none;transition:border-color .2s;
+  background:#fff;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{border-color:#212121}
+.form-group textarea{resize:vertical;min-height:120px}
+.phone-wrap{display:flex;gap:8px;align-items:center}
+.phone-wrap input{flex:1}
+.phone-wrap span{color:#999;font-size:14px}
+.form-group .radio-group{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:8px}
+.form-group .radio-group label{display:flex;align-items:center;gap:6px;font-size:14px;color:#555;cursor:pointer;margin:0}
+.form-group .radio-group input[type="radio"]{width:auto;padding:0;border:none}
+.form-group .checkbox-group label{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#555;cursor:pointer;margin:0;line-height:1.6}
+.form-group .checkbox-group input[type="checkbox"]{width:auto;padding:0;border:none;margin-top:2px;flex-shrink:0}
+
+.submit-btn{
+  width:100%;padding:16px;
+  background:#212121;color:#fff;
+  border:none;cursor:pointer;
+  font-size:14px;letter-spacing:1px;
+  font-family:'Poppins',sans-serif;
+  transition:background .2s;margin-top:8px;
+}
+.submit-btn:hover{background:#505050}
+
+.form-notice{font-size:12px;color:#999;line-height:1.8;margin-top:16px;text-align:center}
+
+/* 제출 완료 */
+.success-msg{display:none;text-align:center;padding:60px 20px}
+.success-msg h2{font-size:20px;font-weight:300;color:#212121;margin:0 0 16px}
+.success-msg p{font-size:14px;color:#777;line-height:1.8}
+
+footer{background:#fff;text-align:center;padding:20px 15px 40px}
+.ft-sns{display:flex;justify-content:center;gap:4px}
+.ft-sns a{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#3b3b3b;text-decoration:none;transition:opacity .2s}
+.ft-sns a:hover{opacity:.7}
+
+@media(max-width:767px){
+  #doz_header{display:none}
+  #mobile_header{display:flex}
+  .page-body{padding-top:56px}
+  #slide_menu{width:100%}
+}
+</style>
+</head>
+<body>
+<header id="doz_header">
+  <div class="hd-logo"><a href="/RENODE/">RE:NODE DESIGN STUDIO</a></div>
+  <nav><ul class="hd-nav">
+    <li><a href="/RENODE/">HOME</a></li>
+    <li><a href="/RENODE/project.html">PROJECT</a></li>
+    <li><a href="/RENODE/process.html">PROCESS</a></li>
+    <li><a href="/RENODE/contact.html" class="active">CONTACT</a></li>
+    <li><a href="https://blog.naver.com/node-studio" target="_blank">BLOG</a></li>
+  </ul></nav>
+  <div class="hd-menu-btn" onclick="openSlide()"><span></span><span></span><span></span></div>
+</header>
+<header id="mobile_header">
+  <div class="m-logo"><a href="/RENODE/">RE:NODE DESIGN STUDIO</a></div>
+  <div class="m-menu-btn" onclick="openSlide()"><span></span><span></span><span></span></div>
+</header>
+<div class="slide-overlay" id="overlay" onclick="closeSlide()"></div>
+<div id="slide_menu">
+  <button class="slide-close" onclick="closeSlide()">✕</button>
+  <ul class="slide-menu-list">
+    <li><a href="/RENODE/" onclick="closeSlide()">HOME</a></li>
+    <li><a href="/RENODE/project.html" onclick="closeSlide()">PROJECT</a></li>
+    <li><a href="/RENODE/process.html" onclick="closeSlide()">PROCESS</a></li>
+    <li><a href="/RENODE/contact.html" onclick="closeSlide()">CONTACT</a></li>
+    <li><a href="https://blog.naver.com/node-studio" target="_blank" onclick="closeSlide()">BLOG</a></li>
+  </ul>
+</div>
+
+<div class="page-body">
+  <div class="form-container">
+    <div class="form-header">
+      <p class="eyebrow">CONTACT</p>
+      <h1>프로젝트 상담 의뢰</h1>
+      <p class="desc">
+        공사 착공은 최소 3개월 전 계약을 권장드리며, 6개월 전 상담 및 일정 조율을 가장 권장드립니다.<br>
+        아래 상담 의뢰서를 작성해 주시면 내용 확인 후 순차적으로 전화 상담을 도와드립니다.<br>
+        평면도나 참고 이미지가 있다면 함께 첨부해 주세요.
+      </p>
+    </div>
+
+    <form id="consultForm" onsubmit="handleSubmit(event)">
+
+      <div class="form-group">
+        <label>이름 <span class="req">*</span></label>
+        <input type="text" name="name" required placeholder="">
+      </div>
+
+      <div class="form-group">
+        <label>연락처 <span class="req">*</span></label>
+        <div class="phone-wrap">
+          <input type="tel" name="phone1" maxlength="4" placeholder="010" required>
+          <span>-</span>
+          <input type="tel" name="phone2" maxlength="4" placeholder="0000" required>
+          <span>-</span>
+          <input type="tel" name="phone3" maxlength="4" placeholder="0000" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>이메일 <span class="req">*</span></label>
+        <input type="email" name="email" required placeholder="">
+      </div>
+
+      <div class="form-group">
+        <label>현장 주소 <span class="req">*</span></label>
+        <input type="text" name="address1" placeholder="주소" required style="margin-bottom:8px">
+        <input type="text" name="address2" placeholder="상세주소">
+      </div>
+
+      <div class="form-group">
+        <label>평형 / 타입 (예: 34평 / 113㎡ 등) <span class="req">*</span></label>
+        <input type="text" name="area" required>
+      </div>
+
+      <div class="form-group">
+        <label>건물 유형 <span class="req">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="building_type" value="아파트/주상복합/오피스텔" required> 아파트 / 주상복합 / 오피스텔</label>
+          <label><input type="radio" name="building_type" value="주택/빌라"> 주택 / 빌라</label>
+          <label><input type="radio" name="building_type" value="상가(상업공간)"> 상가 (상업공간)</label>
+          <label><input type="radio" name="building_type" value="기타"> 기타</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>공사 희망 시기</label>
+        <input type="text" name="desired_date" placeholder="예: 2025년 하반기, 미정 등">
+      </div>
+
+      <div class="form-group">
+        <label>공사 범위</label>
+        <div class="radio-group">
+          <label><input type="radio" name="scope" value="전체(풀패키지)"> 전체 (풀패키지)</label>
+          <label><input type="radio" name="scope" value="부분공사"> 부분공사</label>
+          <label><input type="radio" name="scope" value="미정"> 미정</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>예산 규모</label>
+        <input type="text" name="budget" placeholder="예: 3천만원대, 미정 등">
+      </div>
+
+      <div class="form-group">
+        <label>문의 내용</label>
+        <textarea name="message" placeholder="공간에 대한 희망사항, 참고하고 싶은 스타일, 기타 문의 내용을 자유롭게 작성해 주세요."></textarea>
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" name="privacy" required>
+            개인정보 수집 및 이용에 동의합니다. (필수) — 수집 항목: 이름, 연락처, 이메일 / 목적: 상담 연락 / 보유기간: 상담 완료 후 1년
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">상담 의뢰서 제출하기</button>
+      <p class="form-notice">제출 후 영업일 기준 1~2일 내에 연락드립니다.</p>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      <h2>상담 의뢰가 접수되었습니다.</h2>
+      <p>빠른 시일 내에 연락드리겠습니다.<br>감사합니다.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-sns">
+    <a href="https://www.instagram.com/renode_designstudio" target="_blank"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2"/></svg></a>
+    <a href="https://open.kakao.com/o/skj4mssi" target="_blank"><svg width="24" height="24" viewBox="0 0 36 36"><path fill="currentColor" d="M18 4C10.268 4 4 9.373 4 15.993c0 4.144 2.537 7.782 6.39 9.933l-1.627 5.993 7-4.635A16.8 16.8 0 0 0 18 27.986c7.732 0 14-5.373 14-11.993S25.732 4 18 4z"/><text x="9.5" y="21.5" font-family="Arial Black,sans-serif" font-size="9.5" font-weight="900" fill="white">Talk</text></svg></a>
+    <a href="https://blog.naver.com/node-studio" target="_blank"><svg width="24" height="24" viewBox="0 0 36 36"><rect x="2" y="5" width="32" height="26" rx="3" fill="currentColor"/><text x="5.5" y="23" font-family="Arial,sans-serif" font-size="9.5" font-weight="700" fill="white" letter-spacing="-0.3">blog</text></svg></a>
+    <a href="tel:+820317067561"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></a>
+  </div>
+  <p style="margin:14px 0;font-size:14px;letter-spacing:2px;color:#222"><strong>RE:NODE DESIGN STUDIO</strong></p>
+  <p style="margin:0 0 14px;font-size:12px;color:#777;line-height:1.8">삶의 흐름까지 설계하는 리노드 디자인스튜디오</p>
+  <p style="margin:0 0 6px;font-size:11px;color:#888;line-height:1.3">Director &nbsp;&nbsp; 이현정</p>
+  <p style="margin:0 0 6px;font-size:11px;color:#888;line-height:1.3">경기 성남시 고등로 3, C동 121</p>
+  <p style="margin:0 0 6px;font-size:11px;color:#888;line-height:1.3">사업자등록번호 341-05-01190</p>
+  <p style="margin:0 0 6px;font-size:11px;color:#888;line-height:1.3">E-mail &nbsp;&nbsp; renode.design@gmail.com</p>
+</footer>
+
+<script>
+function openSlide(){document.getElementById('slide_menu').classList.add('open');document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden'}
+function closeSlide(){document.getElementById('slide_menu').classList.remove('open');document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
+window.addEventListener('scroll',()=>document.getElementById('doz_header').classList.toggle('scrolled',window.scrollY>10));
+
+function handleSubmit(e) {
+  e.preventDefault();
+  // 폼 데이터를 EmailJS 또는 mailto로 전송
+  const form = document.getElementById('consultForm');
+  const data = new FormData(form);
+  const name = data.get('name');
+  const phone = data.get('phone1')+'-'+data.get('phone2')+'-'+data.get('phone3');
+  const email = data.get('email');
+  const address = data.get('address1')+' '+data.get('address2');
+  const area = data.get('area');
+  const building = data.get('building_type');
+  const date = data.get('desired_date');
+  const scope = data.get('scope');
+  const budget = data.get('budget');
+  const message = data.get('message');
+
+  const body = encodeURIComponent(
+    `[상담 의뢰서]\n\n이름: ${name}\n연락처: ${phone}\n이메일: ${email}\n현장주소: ${address}\n평형/타입: ${area}\n건물유형: ${building}\n희망시기: ${date}\n공사범위: ${scope}\n예산: ${budget}\n\n문의내용:\n${message}`
+  );
+
+  window.location.href = `mailto:renode.design@gmail.com?subject=${encodeURIComponent('[상담의뢰] '+name)}&body=${body}`;
+
+  form.style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+}
+</script>
+</body>
+</html>
