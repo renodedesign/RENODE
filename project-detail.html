@@ -3,9 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,viewport-fit=cover,initial-scale=1.0">
-<title>주거 인테리어 프로젝트 | RE:NODE DESIGN STUDIO</title>
-<meta name="description" content="생활의 흐름에 맞춘 주거 인테리어 프로젝트를 소개합니다.">
-<meta property="og:image" content="https://cdn.imweb.me/upload/S202605043e34e550cd94e/58b1543ad3987.png">
+<title>프로젝트 상세 | RE:NODE DESIGN STUDIO</title>
 <link rel="icon" type="image/png" href="https://cdn.imweb.me/thumbnail/20260514/00a1031ad24a4.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
@@ -24,11 +22,6 @@ body{font-family:"Pretendard","Noto Sans KR",sans-serif;background:#fff;color:#2
 #mobile_header .m-logo a{font-size:13px;letter-spacing:1px;color:#212121;text-decoration:none}
 #mobile_header .m-menu-btn{position:absolute;right:15px;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:8px}
 #mobile_header .m-menu-btn span{display:block;width:18px;height:1px;background:#212121}
-#mobile_tab_nav{display:none;position:fixed;top:56px;left:0;right:0;z-index:999;background:#fff;border-bottom:1px solid #e7e7e7;overflow-x:auto;scrollbar-width:none}
-#mobile_tab_nav::-webkit-scrollbar{display:none}
-.mob-tab-inner{display:flex;white-space:nowrap}
-.mob-tab-item{display:inline-flex;align-items:center;height:45px;padding:0 15px;font-size:12px;color:#212121;text-decoration:none;flex-shrink:0}
-.mob-tab-item.active{border-bottom:2px solid #b0afaf;color:#b0afaf}
 .slide-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:1998;opacity:0;visibility:hidden;transition:opacity .3s}
 .slide-overlay.open{opacity:1;visibility:visible}
 #slide_menu{position:fixed;top:0;right:-320px;bottom:0;width:300px;background:rgba(232,228,223,.9);z-index:1999;padding:60px 0 0;transition:right .3s;backdrop-filter:blur(8px)}
@@ -39,55 +32,35 @@ body{font-family:"Pretendard","Noto Sans KR",sans-serif;background:#fff;color:#2
 
 /* 본문 */
 .page-body{padding-top:80px}
-.page-header{padding:60px 20px 40px;text-align:center}
-.page-header .eyebrow{font-family:"Poppins",sans-serif;font-size:12px;letter-spacing:5px;color:#999;margin:0 0 20px}
-.page-header h1{font-size:30px;font-weight:300;letter-spacing:-0.5px;margin:0 0 12px}
-.page-header .sub{font-size:14px;color:#777;line-height:1.8}
 
-/* 프로젝트 그리드 */
-.proj-grid{
-  max-width:1200px;margin:0 auto;
-  padding:0 40px 80px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:0;
-}
-.proj-card{display:block;text-decoration:none;color:#212121;position:relative;overflow:hidden;cursor:pointer}
-.proj-card-img{position:relative;overflow:hidden;aspect-ratio:4/3}
-.proj-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
-.proj-card:hover .proj-card-img img{transform:scale(1.03)}
-.proj-card-overlay{
-  position:absolute;inset:0;
-  background:rgba(0,0,0,0);
-  display:flex;align-items:flex-end;padding:24px;
-  transition:background .3s;
-}
-.proj-card:hover .proj-card-overlay{background:rgba(0,0,0,.15)}
-.proj-card-label{
-  opacity:0;transform:translateY(6px);transition:all .3s;
-  font-family:"Poppins",sans-serif;font-size:11px;letter-spacing:2px;color:#fff;
-}
-.proj-card:hover .proj-card-label{opacity:1;transform:translateY(0)}
-.proj-card-info{padding:16px 0 32px}
-.proj-card-info .meta{font-family:"Poppins",sans-serif;font-size:11px;letter-spacing:1px;color:#999;margin:0 0 6px}
-.proj-card-info .title{font-size:15px;font-weight:400;color:#212121;margin:0}
+/* 프로젝트 정보 */
+.proj-info{max-width:900px;margin:0 auto;padding:60px 40px 40px}
+.proj-info .location{font-family:"Poppins",sans-serif;font-size:12px;letter-spacing:2px;color:#999;margin:0 0 16px}
+.proj-info h1{font-size:19px;font-weight:400;color:#212121;margin:0 0 18px;line-height:1.5;letter-spacing:-0.3px}
+.proj-info .desc{font-size:13px;color:#777;margin:0 0 24px;line-height:1.8;letter-spacing:-0.2px}
+.proj-info .meta{font-size:13px;color:#888;line-height:1.8;font-family:"Poppins",sans-serif}
 
-/* CTA */
-.proj-cta{
-  text-align:center;
-  background:rgba(245,243,240,1);
-  padding:60px 20px;margin:0;
-}
-.proj-cta p{font-size:14px;color:#555;line-height:2;margin:0 0 24px}
-.cta-btn{
-  display:inline-block;background:#212121;color:#fff;
-  padding:13px 32px;font-family:"Poppins",sans-serif;font-size:12px;letter-spacing:1px;
-  text-decoration:none;transition:background .2s;
-}
-.cta-btn:hover{background:#505050}
+/* 슬라이더 */
+.slider-wrap{position:relative;max-width:900px;margin:0 auto 80px;padding:0 40px}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-family:"Poppins",sans-serif;font-size:12px;letter-spacing:1px;color:#999;text-decoration:none;margin:0 0 24px;transition:color .2s;display:block}
+.back-link:hover{color:#212121}
+.slider{position:relative;overflow:hidden;background:#f5f5f5}
+.slide{display:none}
+.slide.active{display:block}
+.slide img{width:100%;height:auto;display:block}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:28px;color:#fff;z-index:10;width:50px;height:50px;display:flex;align-items:center;justify-content:center;text-shadow:0 1px 6px rgba(0,0,0,.5);transition:opacity .2s}
+.slider-btn:hover{opacity:.7}
+.slider-btn.prev{left:8px}
+.slider-btn.next{right:8px}
+.slider-counter{text-align:center;margin-top:14px;font-family:"Poppins",sans-serif;font-size:12px;color:#aaa;letter-spacing:2px}
 
-/* 로딩 */
-#loading{text-align:center;padding:80px 20px;color:#999;font-size:14px}
+/* 이전/다음 프로젝트 */
+.proj-nav{max-width:900px;margin:0 auto 80px;padding:0 40px;display:flex;justify-content:space-between;border-top:1px solid #eee;padding-top:32px}
+.proj-nav a{font-family:"Poppins",sans-serif;font-size:12px;letter-spacing:1px;color:#999;text-decoration:none;transition:color .2s}
+.proj-nav a:hover{color:#212121}
+
+/* 로딩/에러 */
+#loading{text-align:center;padding:120px 20px;color:#999;font-size:14px}
 
 footer{background:#fff;text-align:center;padding:20px 15px 40px}
 .ft-sns{display:flex;justify-content:center;gap:4px}
@@ -97,10 +70,10 @@ footer{background:#fff;text-align:center;padding:20px 15px 40px}
 @media(max-width:767px){
   #doz_header{display:none}
   #mobile_header{display:flex}
-  #mobile_tab_nav{display:block}
-  .page-body{padding-top:101px}
-  .proj-grid{grid-template-columns:1fr;padding:0 0 60px}
-  .proj-card-info{padding:12px 16px 24px}
+  .page-body{padding-top:56px}
+  .proj-info{padding:40px 20px 24px}
+  .slider-wrap{padding:0 20px;margin-bottom:60px}
+  .proj-nav{padding:24px 20px 0}
   #slide_menu{width:100%}
 }
 </style>
@@ -121,15 +94,6 @@ footer{background:#fff;text-align:center;padding:20px 15px 40px}
   <div class="m-logo"><a href="/RENODE/">RE:NODE DESIGN STUDIO</a></div>
   <div class="m-menu-btn" onclick="openSlide()"><span></span><span></span><span></span></div>
 </header>
-<nav id="mobile_tab_nav">
-  <div class="mob-tab-inner">
-    <a href="/RENODE/" class="mob-tab-item">HOME</a>
-    <a href="/RENODE/project.html" class="mob-tab-item active">PROJECT</a>
-    <a href="/RENODE/process.html" class="mob-tab-item">PROCESS</a>
-    <a href="/RENODE/contact.html" class="mob-tab-item">CONTACT</a>
-    <a href="https://blog.naver.com/node-studio" target="_blank" class="mob-tab-item">BLOG</a>
-  </div>
-</nav>
 <div class="slide-overlay" id="overlay" onclick="closeSlide()"></div>
 <div id="slide_menu">
   <button class="slide-close" onclick="closeSlide()">✕</button>
@@ -143,18 +107,22 @@ footer{background:#fff;text-align:center;padding:20px 15px 40px}
 </div>
 
 <div class="page-body">
-  <div class="page-header">
-    <p class="eyebrow">PROJECT</p>
-    <h1>공간에 담긴 이야기</h1>
-    <p class="sub">각기 다른 삶의 방식을 담아낸 주거 공간 프로젝트를 소개합니다.</p>
-  </div>
-
-  <div id="loading">프로젝트를 불러오는 중...</div>
-  <div class="proj-grid" id="projGrid"></div>
-
-  <div class="proj-cta">
-    <p>모든 프로젝트는 고객과의 충분한 대화에서 시작됩니다.<br>공간에 대한 상담을 원하시면 언제든 연락해 주세요.</p>
-    <a class="cta-btn" href="/RENODE/19.html">상담 문의하기</a>
+  <div id="loading">불러오는 중...</div>
+  <div id="content" style="display:none">
+    <div class="proj-info">
+      <p class="location" id="pLocation"></p>
+      <h1 id="pTitle"></h1>
+      <p class="desc" id="pDesc"></p>
+      <div class="meta" id="pMeta"></div>
+    </div>
+    <div class="slider-wrap">
+      <a class="back-link" href="/RENODE/project.html">← PROJECT</a>
+      <div class="slider" id="slider"></div>
+      <button class="slider-btn prev" onclick="changeSlide(-1)">&#8592;</button>
+      <button class="slider-btn next" onclick="changeSlide(1)">&#8594;</button>
+      <div class="slider-counter" id="counter"></div>
+    </div>
+    <div class="proj-nav" id="projNav"></div>
   </div>
 </div>
 
@@ -178,32 +146,68 @@ function openSlide(){document.getElementById("slide_menu").classList.add("open")
 function closeSlide(){document.getElementById("slide_menu").classList.remove("open");document.getElementById("overlay").classList.remove("open");document.body.style.overflow=""}
 window.addEventListener("scroll",()=>document.getElementById("doz_header").classList.toggle("scrolled",window.scrollY>10));
 
-// projects.json 읽어서 목록 렌더링
+let current = 0, slides = [], total = 0;
+
+function changeSlide(dir) {
+  slides[current].classList.remove("active");
+  current = (current + dir + total) % total;
+  slides[current].classList.add("active");
+  document.getElementById("counter").textContent = (current+1) + " / " + total;
+}
+document.addEventListener("keydown", e => {
+  if(e.key==="ArrowLeft") changeSlide(-1);
+  if(e.key==="ArrowRight") changeSlide(1);
+});
+
+// URL에서 id 파라미터 읽기
+const id = new URLSearchParams(location.search).get("id");
+
 fetch("projects.json")
   .then(r => r.json())
   .then(data => {
-    document.getElementById("loading").style.display = "none";
-    const grid = document.getElementById("projGrid");
-    data.projects.forEach(p => {
-      const card = document.createElement("a");
-      card.href = "project-detail.html?id=" + p.slug;
-      card.className = "proj-card";
-      card.innerHTML = `
-        <div class="proj-card-img">
-          <img src="${p.thumbnail}" alt="${p.title}" loading="lazy">
-          <div class="proj-card-overlay">
-            <span class="proj-card-label">VIEW PROJECT</span>
-          </div>
-        </div>
-        <div class="proj-card-info">
-          <p class="meta">RESIDENCE &mdash; ${p.date}</p>
-          <p class="title">${p.title}</p>
-        </div>`;
-      grid.appendChild(card);
+    const projects = data.projects;
+    const idx = projects.findIndex(p => p.slug === id);
+    if(idx === -1) {
+      document.getElementById("loading").textContent = "프로젝트를 찾을 수 없습니다.";
+      return;
+    }
+    const p = projects[idx];
+
+    // 페이지 타이틀
+    document.title = p.title + " | RE:NODE DESIGN STUDIO";
+
+    // 프로젝트 정보
+    document.getElementById("pLocation").textContent = p.location + " — " + p.py;
+    document.getElementById("pTitle").textContent = p.title;
+    document.getElementById("pDesc").innerHTML = p.desc1 + "<br>" + p.desc2;
+    document.getElementById("pMeta").innerHTML =
+      "Type : " + p.type + "<br>Area : " + p.area + "<br>Date : " + p.date;
+
+    // 슬라이더 생성
+    const slider = document.getElementById("slider");
+    p.images.forEach((img, i) => {
+      const div = document.createElement("div");
+      div.className = "slide" + (i===0?" active":"");
+      div.innerHTML = \`<img src="\${img}" alt="\${p.title}" loading="\${i===0?"eager":"lazy"}">\`;
+      slider.appendChild(div);
     });
+    slides = document.querySelectorAll(".slide");
+    total = slides.length;
+    document.getElementById("counter").textContent = "1 / " + total;
+
+    // 이전/다음 프로젝트
+    const nav = document.getElementById("projNav");
+    const prev = projects[idx - 1];
+    const next = projects[idx + 1];
+    nav.innerHTML =
+      (prev ? \`<a href="project-detail.html?id=\${prev.slug}">← \${prev.title}</a>\` : "<span></span>") +
+      (next ? \`<a href="project-detail.html?id=\${next.slug}">\${next.title} →</a>\` : "<span></span>");
+
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("content").style.display = "block";
   })
   .catch(() => {
-    document.getElementById("loading").textContent = "프로젝트를 불러올 수 없습니다.";
+    document.getElementById("loading").textContent = "데이터를 불러올 수 없습니다.";
   });
 </script>
 </body>
